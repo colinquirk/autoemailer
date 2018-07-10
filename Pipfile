@@ -5,6 +5,3 @@ name = "pypi"
 
 [packages]
 xmltodict = "*"
-
-[dev-packages]
-rope = "*"
