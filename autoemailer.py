@@ -155,7 +155,7 @@ def send_invalid_participant_email(participant):
     message.attach(MIMEText(body))
     email_text = message.as_string()
 
-    # server.sendmail(from_email, to_email, email_text)
+    server.sendmail(from_email, to_email, email_text)
 
 
 def get_researcher_email(exp_ID, first_researcher_ID):
@@ -262,8 +262,7 @@ def send_emails(participant_list):
         email_text = message.as_string()
 
         try:
-            pass
-            # server.sendmail(from_email, to_email, email_text)
+            server.sendmail(from_email, to_email, email_text)
         except Exception as e:
             retry_list.append(participant)
             continue
@@ -293,7 +292,7 @@ def send_error_alert(e):
     message.attach(MIMEText(body))
     email_text = message.as_string()
 
-    # server.sendmail(from_email, to_email, email_text)
+    server.sendmail(from_email, to_email, email_text)
 
 
 def send_success_email():
@@ -319,7 +318,7 @@ def send_success_email():
     message.attach(MIMEText(body))
     email_text = message.as_string()
 
-    # server.sendmail(from_email, to_email, email_text)
+    server.sendmail(from_email, to_email, email_text)
 
 
 def main():
