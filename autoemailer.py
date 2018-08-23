@@ -87,6 +87,7 @@ def get_participants(timeslot_dict):
                     participant_dict["researcher_email"] = get_researcher_email(
                         participant_dict["experiment_ID"], timeslot_dict["researcher_ID"]
                     )
+                    participants.append(participant_dict)
             else:
                 participant = timeslot
                 participant_dict = {}
@@ -101,16 +102,17 @@ def get_participants(timeslot_dict):
                 participant_dict["researcher_email"] = get_researcher_email(
                     participant_dict["experiment_ID"], timeslot_dict["researcher_ID"]
                 )
-
-            if is_invalid_account(participant_dict):
-                send_invalid_participant_email(participant_dict)
-            else:
                 participants.append(participant_dict)
 
-        else:
-            continue
+    good_participants = []
 
-    return participants
+    for participant in participants:
+        if is_invalid_account(participant):
+            send_invalid_participant_email(participant)
+        else:
+            good_participants.append(participant)
+
+    return good_participants
 
 
 def is_invalid_account(participant):
