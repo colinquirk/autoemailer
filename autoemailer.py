@@ -137,6 +137,7 @@ def is_invalid_account(participant):
 def send_invalid_participant_email(participant):
     from_email = secret.gmail_address
     to_email = participant['researcher_email']
+    cc_email = secret.admin_address + ',' + secret.gmail_address
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
@@ -145,6 +146,7 @@ def send_invalid_participant_email(participant):
     message = MIMEMultipart()
     message["From"] = from_email
     message["To"] = to_email
+    message["Cc"] = cc_email
     message["Subject"] = 'Warning: One of your subjects has 2 Unexcused Absences'
 
     body = (
@@ -157,7 +159,7 @@ def send_invalid_participant_email(participant):
     message.attach(MIMEText(body))
     email_text = message.as_string()
 
-    server.sendmail(from_email, to_email, email_text)
+    server.sendmail(from_email, [to_email] + cc_email.split(','), email_text)
 
 
 def get_researcher_email(exp_ID, first_researcher_ID):
@@ -275,6 +277,7 @@ def send_emails(participant_list):
 def send_error_alert(e):
     from_email = secret.gmail_address
     to_email = secret.admin_address
+    cc_email = secret.gmail_address
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
@@ -283,6 +286,7 @@ def send_error_alert(e):
     message = MIMEMultipart()
     message["From"] = from_email
     message["To"] = to_email
+    message["Cc"] = cc_email
     message["Subject"] = 'ERROR: An error has occured with the reminder email system.'
 
     body = (
@@ -294,7 +298,7 @@ def send_error_alert(e):
     message.attach(MIMEText(body))
     email_text = message.as_string()
 
-    server.sendmail(from_email, to_email, email_text)
+    server.sendmail(from_email, [to_email] + [cc_email], email_text)
 
 
 def send_success_email():
